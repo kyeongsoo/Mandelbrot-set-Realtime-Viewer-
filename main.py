@@ -105,10 +105,19 @@ class App:
             self.fractal.run()
             pg.display.flip()
 
-            [exit() for i in pg.event.get() if i.type == pg.QUIT]
-            self.clock.tick()
-            pg.display.set_caption(f'FPS: {self.clock.get_fps() :.2f}')
+            # [exit() for i in pg.event.get() if i.type == pg.QUIT]
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    exit()
+                if event.type == pg.MOUSEBUTTONUP:
+                    pos = pg.mouse.get_pos()
 
+            self.clock.tick()
+            if 'pos' in locals():
+                pg.display.set_caption(f'Mouse position: {pos}')
+            else:
+                pg.display.set_caption(f'FPS: {self.clock.get_fps() :.2f}')
+            
 
 if __name__ == '__main__':
     app = App()
